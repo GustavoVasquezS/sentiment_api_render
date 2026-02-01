@@ -11,6 +11,7 @@ from contextlib import asynccontextmanager
 import joblib
 import numpy as np
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 # ============================================================
@@ -78,6 +79,17 @@ app = FastAPI(
     description="API para análisis de sentimiento en español y portugués. Clasifica texto en Negativo, Neutro o Positivo.",
     version="1.0.0",
     lifespan=lifespan,
+)
+
+# ============================================================
+# Configuración CORS
+# ============================================================
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite todos los orígenes (en producción especificar dominios)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
