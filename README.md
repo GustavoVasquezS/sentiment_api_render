@@ -217,6 +217,72 @@ curl -X POST "http://localhost:8000/predict" \
 
 MIT License
 
-## 🤝 Créditos
+---
 
-Desarrollado para Hackathon ONE - No Country
+## 🙏 Agradecimientos
+
+Este proyecto fue posible gracias al esfuerzo colaborativo y el apoyo de múltiples actores:
+
+### Al Programa Hackathon ONE - No Country
+
+Agradecemos profundamente a **No Country** por:
+- Proporcionar un espacio de aprendizaje colaborativo y desafiante
+- Fomentar el trabajo en equipo interdisciplinario
+- Crear oportunidades para desarrolladores de toda Latinoamérica
+- Impulsar proyectos que resuelven problemas reales con tecnología
+
+### Al Equipo No Data - No Code
+
+Agradecimiento especial al equipo **No Data - No Code** por el extraordinario trabajo realizado durante la Hackathon:
+
+- **Francisco Llendo** - Por desarrollar y optimizar el modelo de Machine Learning a la versión 4.0, disponible en [Sentimental_API_No_Data_No_Code_Semana_4](https://github.com/GustavoVasquezS/Sentimental_API_No_Data_No_Code_Semana_4). El modelo final incluye:
+  - Pipeline TF-IDF + Regresión Logística con calibración de probabilidades
+  - Soporte multilingüe (español y portugués)
+  - Sistema de revisión automática para predicciones de baja confianza
+  - Optimización de umbrales para clasificación de 3 clases
+  
+- **Jonathan Tuppia** - Por su repositorio de referencia [SentimentAPI](https://github.com/Jona-9/SentimentAPI) y por liderar el deploy de los tres frentes en local y la presentación en el Demo Day.
+- **Alexandra Cleto** - Por su repositorio de referencia [sentimientos](https://github.com/Alexandracleto/sentimientos/tree/Ale-dev) que inspiró el diseño del frontend.
+
+### Al Equipo de Desarrollo
+
+**Data Science Team (Python/FastAPI)**:
+- Por desarrollar un modelo de ML preciso y eficiente
+- Por documentar claramente los endpoints de análisis
+- Por optimizar los tiempos de respuesta del modelo
+
+**Backend Team (Java/Spring Boot)**:
+- Por la integración fluida con esta API de ML
+- Por el diseño del gateway de autenticación
+
+**Frontend Team (React/Tailwind)**:
+- Por crear una interfaz intuitiva para consumir los análisis
+
+### A la Comunidad Open Source
+
+Especial reconocimiento a los mantenedores de:
+- **FastAPI** - Por el framework web moderno y de alto rendimiento
+- **scikit-learn** - Por las herramientas de Machine Learning accesibles
+- **Pydantic** - Por la validación de datos robusta
+
+### A los Futuros Usuarios y Contribuidores
+
+Si este proyecto te resultó útil, considera:
+- ⭐ **Dar una estrella** al repositorio en GitHub
+- 🐛 **Reportar bugs** o sugerir mejoras a través de Issues
+- 🔧 **Contribuir** con Pull Requests
+- 📢 **Compartir** el proyecto con otros desarrolladores
+
+---
+
+<div align="center">
+
+**⭐ Si este proyecto te ayudó, considera darle una estrella ⭐**
+
+**🚀 Happy Coding! 🚀**
+
+---
+
+*Sentiment Analysis API v4.0 - Hackathon ONE 2026*
+
+</div>
