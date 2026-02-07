@@ -1,37 +1,111 @@
-# Sentiment Analysis API v4.0 (Español/Portugués)
+# 🧠 Sentiment Analysis API v4.0 (Español/Portugués)
 
-API para análisis de sentimiento en español y portugués, basada en un modelo TF-IDF + Regresión Logística calibrada. El modelo fue entrenado sobre reseñas multilingües y clasifica comentarios en tres categorías: **Negativo**, **Neutro** y **Positivo**.
+<div align="center">
 
-## Modelo
-- **Pipeline:** Limpieza de texto → TF-IDF → Regresión Logística → Calibración de probabilidades
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=flat-square&logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green?style=flat-square&logo=fastapi)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3-orange?style=flat-square&logo=scikit-learn)
+![Render](https://img.shields.io/badge/Deploy-Render-purple?style=flat-square&logo=render)
+
+**API de Machine Learning para análisis de sentimientos en español y portugués**
+
+[Demo en Producción](https://sentiment-api-render.onrender.com/docs) · [Dashboard](https://sentiment-dashboard-pi.vercel.app)
+
+</div>
+
+---
+
+## 🌐 URLs de Producción
+
+| Servicio | URL |
+|----------|-----|
+| **API ML (este repo)** | https://sentiment-api-render.onrender.com |
+| **Documentación Swagger** | https://sentiment-api-render.onrender.com/docs |
+| **Backend Java** | https://sentiment-backend-java-production.up.railway.app |
+| **Frontend React** | https://sentiment-dashboard-pi.vercel.app |
+
+---
+
+## 📖 Descripción
+
+API REST desarrollada en **FastAPI** que utiliza un modelo de Machine Learning para clasificar textos en tres categorías de sentimiento: **Positivo**, **Neutro** y **Negativo**.
+
+### 🔬 Modelo ML
+- **Pipeline:** Limpieza de texto → TF-IDF Vectorizer → Regresión Logística → Calibración de probabilidades
 - **Entrenamiento:** Reseñas en español y portugués, etiquetas derivadas de estrellas (1-2 Negativo, 3 Neutro, 4-5 Positivo)
 - **Artefacto:** `sentiment_bundle_es_pt_v2.joblib` contiene el pipeline calibrado, umbral de confianza, metadatos y términos explicativos
 
-## Predicciones
+### 📊 Predicciones
 - **Entrada:** Texto libre (string, 5-2000 caracteres)
 - **Salida:**
   - `prevision`: Sentimiento predicho (`Negativo`, `Neutro`, `Positivo`)
   - `probabilidad`: Confianza de la predicción (0-1)
   - `review_required`: `true` si la confianza es baja y requiere revisión humana
 
-## Endpoints principales
-- `GET /health`: Estado y versión del modelo
-- `POST /predict`: Predicción individual
-- `POST /predict/batch`: Predicción múltiple (máx 100 textos)
+---
 
-## Instrucciones de uso
+## 🚀 Instalación Local
 
-1. Instala dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. Ejecuta la API:
-   ```bash
-   python main.py
-   ```
-3. Accede a la documentación interactiva en [http://localhost:8000/docs](http://localhost:8000/docs)
+### Requisitos
+- Python 3.11+
+- pip
 
-## Ejemplo de predicción
+### Pasos
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/GustavoVasquezS/sentiment-api-render.git
+cd sentiment-api-render
+
+# Crear entorno virtual
+python -m venv .venv
+
+# Activar entorno virtual
+# Windows:
+.venv\Scripts\activate
+# Linux/Mac:
+source .venv/bin/activate
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Ejecutar la API
+python main.py
+```
+
+La API estará disponible en `http://localhost:8000`
+
+### 📚 Documentación Interactiva
+- **Swagger UI:** http://localhost:8000/docs
+- **ReDoc:** http://localhost:8000/redoc
+
+---
+
+## 📡 Endpoints
+
+### `GET /health`
+Estado y versión del modelo.
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "model_version": "4.0",
+  "languages": ["es", "pt"]
+}
+```
+
+### `POST /predict`
+Predicción de sentimiento para un texto individual.
+
+**Request:**
+```json
+{
+  "text": "Este producto es excelente, me encanta!"
+}
+```
+
+**Response:**
 ```json
 {
   "prevision": "Positivo",
@@ -40,6 +114,109 @@ API para análisis de sentimiento en español y portugués, basada en un modelo 
 }
 ```
 
-## Despliegue en Render
-- Usa el comando: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-- El modelo debe estar en la raíz del proyecto
+### `POST /predict/batch`
+Predicción múltiple (máximo 100 textos).
+
+**Request:**
+```json
+{
+  "texts": [
+    "Excelente servicio",
+    "Pésima atención",
+    "Normal, nada especial"
+  ]
+}
+```
+
+**Response:**
+```json
+[
+  {"prevision": "Positivo", "probabilidad": 0.92, "review_required": false},
+  {"prevision": "Negativo", "probabilidad": 0.88, "review_required": false},
+  {"prevision": "Neutro", "probabilidad": 0.65, "review_required": true}
+]
+```
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+sentiment_api_render/
+├── main.py                          # Aplicación FastAPI
+├── text_cleaner.py                  # Utilidades de limpieza de texto
+├── sentiment_bundle_es_pt_v2.joblib # Modelo ML serializado
+├── requirements.txt                 # Dependencias Python
+├── render.yaml                      # Configuración de despliegue Render
+├── test_api.py                      # Tests de la API
+└── README.md
+```
+
+---
+
+## ☁️ Despliegue en Render
+
+### Configuración automática (render.yaml)
+
+El archivo `render.yaml` ya está configurado:
+
+```yaml
+services:
+  - type: web
+    name: sentiment-api-render
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+```
+
+### Pasos para desplegar
+
+1. Crear cuenta en [Render](https://render.com)
+2. Conectar repositorio de GitHub
+3. Render detectará automáticamente `render.yaml`
+4. El servicio se desplegará en ~2 minutos
+
+---
+
+## 🧪 Testing
+
+```bash
+# Ejecutar tests
+python test_api.py
+
+# Test manual con curl
+curl -X POST "http://localhost:8000/predict" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Este producto es increíble"}'
+```
+
+---
+
+## 📦 Dependencias Principales
+
+| Paquete | Versión | Descripción |
+|---------|---------|-------------|
+| fastapi | 0.104+ | Framework web async |
+| uvicorn | 0.24+ | Servidor ASGI |
+| scikit-learn | 1.3+ | ML Pipeline |
+| joblib | 1.3+ | Serialización del modelo |
+| pydantic | 2.0+ | Validación de datos |
+
+---
+
+## 🔗 Repositorios Relacionados
+
+| Componente | Repositorio | Descripción |
+|------------|-------------|-------------|
+| Backend Java | [sentiment-backend-java](https://github.com/GustavoVasquezS/sentiment-backend-java) | API Gateway con autenticación JWT |
+| Frontend React | [sentiment-dashboard](https://github.com/GustavoVasquezS/sentiment-dashboard) | Dashboard interactivo |
+
+---
+
+## 📄 Licencia
+
+MIT License
+
+## 🤝 Créditos
+
+Desarrollado para Hackathon ONE - No Country
