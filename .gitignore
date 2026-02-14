@@ -1,20 +1,23 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.env
-.env
+# Virtual environment
 .venv/
+venv/
+env/
 
-# VSCode
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Distribution
+dist/
+build/
+*.egg-info/
+
+# IDE
 .vscode/
+.idea/
 
-# Modelos y datos
-# *.joblib  # Comentado: el modelo debe subirse para Render
-*.csv
-*.xlsx
-
-# Otros
-*.log
-*.tmp
+# OS
+.DS_Store
+Thumbs.db
